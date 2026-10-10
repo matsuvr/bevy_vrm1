@@ -57,7 +57,7 @@ impl Plugin for VrmaLoaderPlugin {
             default_convert_coordinates: Default::default(),
             extensions,
             default_skinned_mesh_bounds_policy: Default::default(),
-            default_mesh_compression: Default::default(),
+            default_mesh_compression: bevy::mesh::MeshCompressionArgs::none(),
         }));
     }
 }
