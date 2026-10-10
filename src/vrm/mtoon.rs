@@ -37,23 +37,24 @@ impl Plugin for MtoonMaterialPlugin {
             .register_type::<Shade>()
             .add_plugins(MaterialPlugin::<MToonMaterial>::default())
             .add_plugins((MToonMaterialSetupPlugin, MToonOutlinePlugin));
-        load_internal_asset!(
-            app,
-            MTOON_FRAGMENT_SHADER_HANDLE,
-            "mtoon_fragment.wgsl",
-            Shader::from_wgsl
-        );
+        // Explicit module paths keep UUID-loaded shader assets importable in WESL.
         load_internal_asset!(
             app,
             MTOON_TYPES_SHADER_HANDLE,
-            "mtoon_types.wgsl",
-            Shader::from_wgsl
+            "mtoon_types.wesl",
+            |source, _| Shader::from_wesl(source, "embedded://bevy_vrm1/vrm/mtoon_types.wesl")
+        );
+        load_internal_asset!(
+            app,
+            MTOON_FRAGMENT_SHADER_HANDLE,
+            "mtoon_fragment.wesl",
+            |source, _| Shader::from_wesl(source, "embedded://bevy_vrm1/vrm/mtoon_fragment.wesl")
         );
         load_internal_asset!(
             app,
             MTOON_VERTEX_SHADER_HANDLE,
-            "mtoon_vertex.wgsl",
-            Shader::from_wgsl
+            "mtoon_vertex.wesl",
+            |source, _| Shader::from_wesl(source, "embedded://bevy_vrm1/vrm/mtoon_vertex.wesl")
         );
     }
 }
